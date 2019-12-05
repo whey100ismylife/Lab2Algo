@@ -1,3 +1,4 @@
+import java.io.*;
 import java.util.ArrayList;
 
 /**
@@ -7,6 +8,19 @@ public class Main {
 
 
     public static void main(String[] args) {
+
+        String path = "C:/Users/Robin/OneDrive/SkrivBord/LTU Kurser/Algoritmer och datastrukturer/Lab2/Values.txt";
+        try {
+            PrintWriter writer = new PrintWriter(path, "UTF-8");
+            writer.println("The first line");
+            writer.println("The second line");
+            writer.close();
+
+        }catch (FileNotFoundException e){
+            System.out.println("file not found");
+        }catch (UnsupportedEncodingException e){
+            System.out.println("shit");
+        }
         int[] ok = {0,1,1,3,4,2};
         modifiedProbing(ok);
         linearProbing(ok);
@@ -51,7 +65,15 @@ public class Main {
     }
 
 
-
+    /**
+     *
+     * @param x Integer to insert into hashtable.
+     * @param arr hashtable array.
+     * @param index position to start in the hashtable.
+     * @return hashtable array.
+     *
+     * f1() searches for the position to put x in the hashtable, by moving upwards in the hastable.
+     */
     public static ArrayList<Triplet<Integer,Integer,Integer>> f1(int x, ArrayList<Triplet<Integer,Integer,Integer>> arr, int index){
         //Variables
         int m = arr.size();
@@ -77,6 +99,15 @@ public class Main {
         }
     }
 
+    /**
+     *
+     * @param x Integer to put into hastable.
+     * @param arr hashtable array.
+     * @param index start position in the hastable.
+     * @return hashtable array.
+     *
+     * f2() finds the position for x in the hashtable by moving downwards in the hashtable array.
+     */
     public static ArrayList<Triplet<Integer,Integer,Integer>> f2(int x, ArrayList<Triplet<Integer,Integer,Integer>> arr, int index){
         //Variables
         int m = arr.size();
@@ -111,6 +142,12 @@ public class Main {
         return x % m;
     }
 
+    /**
+     *
+     * @param test testing array.
+     *
+     *  LinearProbing() uses an array as input and makes a hastable with its values, and prints the hashtable.
+     */
     public static void linearProbing(int[] test){
         //Variables
         ArrayList<Integer> hashtable = new ArrayList<>();
@@ -141,6 +178,14 @@ public class Main {
 
     }
 
+    /**
+     *
+     * @param x Integer to insert into hash array.
+     * @param arr the hash array.
+     * @param index index to start searching from.
+     * @return hash array.
+     * LinearF1 finds the position of x in a linear manner, searching upwards in the array from the start position.
+     */
     public static ArrayList<Integer> linearF1(int x, ArrayList<Integer> arr, int index){
         int tempIndex = index + 1;
         int m = arr.size();
