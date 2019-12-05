@@ -36,53 +36,55 @@ public class Main {
         */
         Random rand = new Random();
 
-        for(int i = 0; i < list.length; i++){
+        for (int i = 0; i < list.length; i++) {
             list[i] = rand.nextInt(1000);
         }
 
-        while(true){
-            boolean tests = modifiedProbing(list,m);
-
+        //
+        long start = System.nanoTime();
+        while (true) {
+            boolean tests = modifiedProbing(list, m);
+            if (tests) {
+                break;
+            }
+        }
+        long end = System.nanoTime();
+        runningTime = end - start;
     }
 
-    /**
-     * Modified probing
-     */
-    public static boolean modifiedProbing(int test[], int m){
+    public static boolean modifiedProbing(int test[], int m) {
         //variables
         int index;
 
         //Hashtable
-        ArrayList<Triplet<Integer,Integer,Integer>> hasTable = new ArrayList<>();
+        ArrayList<Triplet<Integer, Integer, Integer>> hasTable = new ArrayList<>();
 
         //creates a empty hastable.
-        for(int i = 0; i < m; i++){
-            hasTable.add(new Triplet<>(1,1,null));
+        for (int i = 0; i < m; i++) {
+            hasTable.add(new Triplet<>(1, 1, null));
         }
 
         //loops through the given list with Integers.
-        for (int x: test
+        for (int x : test
         ) {
             //checks load factor
-            if(currentLoadFactor < maxLOAD){
-                index = h(x,m);
-                if(hasTable.get(index).getLup() <= hasTable.get(index).getLdown()){
-                    //Calls f1 at the index + Lups index where we haven't checked yet.
-                    hasTable = f1(x,hasTable,index);
-
-                }else{
-                    //  hasTable = f2(x,hasTable,index);
+            if (currentLoadFactor < maxLOAD) {
+                //checks if the first index is occupied
+                index = h(x, m);
+                if (hasTable.get(index).getValue() != null) {
+                    nrOfColl++;
+                    if (hasTable.get(index).getLup() <= hasTable.get(index).getLdown()) {
+                        //Calls f1 at the index + Lups index where we haven't checked yet.
+                        //hasTable = f1(x, hasTable, index);
+                    } else {
+                        //  hasTable = f2(x,hasTable,index);
+                    }
+                } else {
+                    hasTable.get(index).setValue(x);
                 }
-
-            }else{
-                return false;
             }
-
-
-
-
         }
-        return false;
+        return true;
     }
 
 
@@ -95,7 +97,7 @@ public class Main {
      *
      * f1() searches for the position to put x in the hashtable, by moving upwards in the hastable.
      */
-    public static ArrayList<Triplet<Integer,Integer,Integer>> f1(int x, ArrayList<Triplet<Integer,Integer,Integer>> arr, int index){
+   /* public static ArrayList<Triplet<Integer,Integer,Integer>> f1(int x, ArrayList<Triplet<Integer,Integer,Integer>> arr, int index){
         //Variables
         int j = 1;
         int tempIndex = index + arr.get(index).getLup();
@@ -113,6 +115,7 @@ public class Main {
         }
     }
 
+*/
     /**
      *
      * @param x Integer in the list
