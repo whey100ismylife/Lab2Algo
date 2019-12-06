@@ -8,15 +8,15 @@ import java.util.Random;
  * @author roblof-8, johlax-8, wesjon-5
  */
 public class Main {
-    public static double maxLOAD = 0.75;
-    public static double currentLoadFactor = 0.0;
-    public static int m = 10;
+    public static double loadFactor = 0.75;
     public static int[] list =  new int[10];
+    public static int m = (int) (list.length/loadFactor);
     public static int hashingUsed = 0;
     public static int probesUsed = 0;
     public static long runningTime = 0;
     public static int nrOfColl = 0;
-    public static int longestCollChain = 0;
+    public static ArrayList<Triplet<Integer,Integer,Integer>> hasTable = new ArrayList<>();
+    public static int longestProbChain = 0;
 
 
     public static void main(String[] args) {
@@ -34,7 +34,13 @@ public class Main {
             System.out.println("shit");
         }
         */
+
+        
         Random rand = new Random();
+        //creates a empty hashtable.
+        for (int i = 0; i < m; i++) {
+            hasTable.add(new Triplet<>(0, 0, null));
+        }
 
         for (int i = 0; i < list.length; i++) {
             list[i] = rand.nextInt(1000);
@@ -43,7 +49,7 @@ public class Main {
         //
         long start = System.nanoTime();
         while (true) {
-            boolean tests = modifiedProbing(list, m);
+            boolean tests = modifiedProbing(list);
             if (tests) {
                 break;
             }
@@ -52,36 +58,29 @@ public class Main {
         runningTime = end - start;
     }
 
-    public static boolean modifiedProbing(int test[], int m) {
+    public static boolean modifiedProbing(int test[]) {
         //variables
         int index;
 
         //Hashtable
-        ArrayList<Triplet<Integer, Integer, Integer>> hasTable = new ArrayList<>();
+        ArrayList<Triplet<Integer, Integer, Integer>> hashTable = new ArrayList<>();
 
-        //creates a empty hastable.
-        for (int i = 0; i < m; i++) {
-            hasTable.add(new Triplet<>(1, 1, null));
-        }
 
         //loops through the given list with Integers.
         for (int x : test
         ) {
-            //checks load factor
-            if (currentLoadFactor < maxLOAD) {
-                //checks if the first index is occupied
-                index = h(x, m);
-                if (hasTable.get(index).getValue() != null) {
-                    nrOfColl++;
-                    if (hasTable.get(index).getLup() <= hasTable.get(index).getLdown()) {
-                        //Calls f1 at the index + Lups index where we haven't checked yet.
-                        //hasTable = f1(x, hasTable, index);
-                    } else {
-                        //  hasTable = f2(x,hasTable,index);
-                    }
+            //checks if the first index is occupied
+            index = h(x, m);
+            if (hashTable.get(index).getValue() != null) {
+                nrOfColl++;
+                if (hashTable.get(index).getLup() <= hashTable.get(index).getLdown()) {
+                    //Calls f1 at the index + Lups index where we haven't checked yet.
+                    hashTable = f1(x, hashTable);
                 } else {
-                    hasTable.get(index).setValue(x);
+                    //  hasTable = f2(x,hasTable,index);
                 }
+            } else {
+                hashTable.get(index).setValue(x);
             }
         }
         return true;
@@ -92,30 +91,27 @@ public class Main {
      *
      * @param x Integer to insert into hashtable.
      * @param arr hashtable array.
-     * @param index position to start in the hashtable.
      * @return hashtable array.
      *
-     * f1() searches for the position to put x in the hashtable, by moving upwards in the hastable.
+     * f1() searches for the position to put x in the hashtable, by moving upwards in the hashtable.
      */
-   /* public static ArrayList<Triplet<Integer,Integer,Integer>> f1(int x, ArrayList<Triplet<Integer,Integer,Integer>> arr, int index){
+    public static ArrayList<Triplet<Integer,Integer,Integer>> f1(int x, ArrayList<Triplet<Integer,Integer,Integer>> arr) {
         //Variables
-        int j = 1;
-        int tempIndex = index + arr.get(index).getLup();
         int add;
+        int probeChain = 0;
+        int i = 1;
+        int index;
 
-            //if the tempIndex is empty, add the element to the list and save the new lup value.
-            if(arr.get(tempIndex).getValue() == null){
-                arr.get(tempIndex).setValue(x);
-                add = arr.get(index).getLup();
-                arr.get(index).setLup(add+j);
-                return arr;
+
+        while (true) {
+            index = h(x, m) + i;
+            if(arr.get(index).getValue() != null){
+                probesUsed++;
+                probeChain++;
+                i++;
             }
-            j++;
-            tempIndex++;
         }
     }
-
-*/
     /**
      *
      * @param x Integer in the list
