@@ -8,14 +8,14 @@ import java.util.Random;
  * @author roblof-8, johlax-8, wesjon-5
  */
 public class Main {
-    public static double loadFactor = 0.75;
-    public static int[] list =  new int[10];
+    public static double loadFactor = 1;
+    public static int[] list =  new int[100000];
     public static int m = (int) (list.length/loadFactor);
     public static int hashingUsed = 0;
     public static int probesUsed = 0;
     public static long runningTime = 0;
     public static int nrOfColl = 0;
-    public static ArrayList<Triplet<Integer,Integer,Integer>> hasTable = new ArrayList<>();
+    public static ArrayList<Triplet<Integer,Integer,Integer>> hashTable = new ArrayList<>();
     public static int longestProbChain = 0;
 
 
@@ -34,36 +34,37 @@ public class Main {
             System.out.println("shit");
         }
         */
-
-        
         Random rand = new Random();
+
+
         //creates a empty hashtable.
         for (int i = 0; i < m; i++) {
-            hasTable.add(new Triplet<>(0, 0, null));
+            hashTable.add(new Triplet<>(0, 0, null));
         }
 
         for (int i = 0; i < list.length; i++) {
             list[i] = rand.nextInt(1000);
         }
 
+        //Test list
+        //int[] list = {1,1,2,3,2,5,6,7,2,1,2,2};
+
         //
         long start = System.nanoTime();
-        while (true) {
-            boolean tests = modifiedProbing(list);
-            if (tests) {
-                break;
-            }
-        }
+        modifiedProbing(list);
         long end = System.nanoTime();
         runningTime = end - start;
+
+        System.out.println("Secs: " + runningTime*0.000000001);
+        System.out.println("amount of hashes: " + hashingUsed);
+        System.out.println("jumps:" + probesUsed);
+        System.out.println("longest jump:" + longestProbChain);
+        System.out.println("number of collision:" + nrOfColl);
     }
 
-    public static boolean modifiedProbing(int test[]) {
+    public static void modifiedProbing(int test[]){
         //variables
         int index;
-
-        //Hashtable
-        ArrayList<Triplet<Integer, Integer, Integer>> hashTable = new ArrayList<>();
 
 
         //loops through the given list with Integers.
@@ -75,15 +76,17 @@ public class Main {
                 nrOfColl++;
                 if (hashTable.get(index).getLup() <= hashTable.get(index).getLdown()) {
                     //Calls f1 at the index + Lups index where we haven't checked yet.
-                    hashTable = f1(x, hashTable);
+                    hashTable = f1(x, hashTable,index);
                 } else {
-                    //  hasTable = f2(x,hasTable,index);
+                      hashTable = f2(x,hashTable,index);
                 }
             } else {
                 hashTable.get(index).setValue(x);
             }
         }
-        return true;
+        for(int i = 0; i < m; i++){
+            System.out.println("Index:" + i + " Lup:" + hashTable.get(i).getLup() + " Ldown:" + hashTable.get(i).getLdown() + " value:" + hashTable.get(i).getValue());
+        }
     }
 
 
@@ -95,23 +98,60 @@ public class Main {
      *
      * f1() searches for the position to put x in the hashtable, by moving upwards in the hashtable.
      */
-    public static ArrayList<Triplet<Integer,Integer,Integer>> f1(int x, ArrayList<Triplet<Integer,Integer,Integer>> arr) {
+    public static ArrayList<Triplet<Integer,Integer,Integer>> f1(int x, ArrayList<Triplet<Integer,Integer,Integer>> arr, int index) {
         //Variables
-        int add;
         int probeChain = 0;
-        int i = 1;
-        int index;
+        int i = arr.get(index).getLup();
+        int newIndex;
 
-
+        //Starts probing
         while (true) {
-            index = h(x, m) + i;
-            if(arr.get(index).getValue() != null){
-                probesUsed++;
-                probeChain++;
-                i++;
+            ++i;
+            newIndex = h(x+i, m);
+            probesUsed++;
+            probeChain++;
+            //if we find an empty spot, add element and count chain.
+            if(arr.get(newIndex).getValue() == null){
+                arr.get(newIndex).setValue(x);
+                arr.get(index).setLup(i);
+                //Longest probe chain
+                if(longestProbChain < probeChain){
+                    longestProbChain = probeChain;
+                }
+                return arr;
             }
         }
     }
+
+    public static ArrayList<Triplet<Integer,Integer,Integer>> f2(int x, ArrayList<Triplet<Integer,Integer,Integer>> arr, int index) {
+        //Variables
+        int probeChain = 0;
+        int i = arr.get(index).getLdown();
+        int newIndex;
+
+        //Starts probing
+        while (true) {
+            i++;
+            newIndex = h(x, m) - i;
+            if(newIndex < 0 ){
+                newIndex = (m) - i;
+            }
+            probesUsed++;
+            probeChain++;
+            //if we find an empty spot, add element and count chain.
+            if(arr.get(newIndex).getValue() == null){
+                arr.get(newIndex).setValue(x);
+                arr.get(index).setLDown(i);
+                //Longest probe chain
+                if(longestProbChain < probeChain){
+                    longestProbChain = probeChain;
+                }
+                return arr;
+            }
+        }
+    }
+
+
     /**
      *
      * @param x Integer in the list
