@@ -9,8 +9,9 @@ import java.util.Random;
  */
 public class Main {
     public static double loadFactor = 1;
-    public static int[] list =  new int[100000];
+    public static int[] list =  new int[1000];
     public static int m = (int) (list.length/loadFactor);
+    //public static int m = 5;
     public static int hashingUsed = 0;
     public static int probesUsed = 0;
     public static long runningTime = 0;
@@ -47,7 +48,7 @@ public class Main {
         }
 
         //Test list
-        //int[] list = {1,1,2,3,2,5,6,7,2,1,2,2};
+        //int[] list = {1,1,1,1,1};
 
         //
         long start = System.nanoTime();
@@ -101,53 +102,57 @@ public class Main {
     public static ArrayList<Triplet<Integer,Integer,Integer>> f1(int x, ArrayList<Triplet<Integer,Integer,Integer>> arr, int index) {
         //Variables
         int probeChain = 0;
-        int i = arr.get(index).getLup();
+        int i = 1;
+        int add;
         int newIndex;
 
         //Starts probing
         while (true) {
-            ++i;
             newIndex = h(x+i, m);
             probesUsed++;
             probeChain++;
             //if we find an empty spot, add element and count chain.
             if(arr.get(newIndex).getValue() == null){
                 arr.get(newIndex).setValue(x);
-                arr.get(index).setLup(i);
+                add = arr.get(index).getLup();
+                arr.get(index).setLup(add+1);
                 //Longest probe chain
                 if(longestProbChain < probeChain){
                     longestProbChain = probeChain;
                 }
                 return arr;
             }
+            i++;
         }
     }
 
     public static ArrayList<Triplet<Integer,Integer,Integer>> f2(int x, ArrayList<Triplet<Integer,Integer,Integer>> arr, int index) {
         //Variables
         int probeChain = 0;
-        int i = arr.get(index).getLdown();
+        int i = 1;
         int newIndex;
+        int add;
 
         //Starts probing
         while (true) {
-            i++;
             newIndex = h(x, m) - i;
             if(newIndex < 0 ){
-                newIndex = (m) - i;
+                newIndex = m + newIndex;
             }
             probesUsed++;
             probeChain++;
             //if we find an empty spot, add element and count chain.
             if(arr.get(newIndex).getValue() == null){
                 arr.get(newIndex).setValue(x);
-                arr.get(index).setLDown(i);
+                add = arr.get(index).getLdown();
+                arr.get(index).setLDown(add+1);
                 //Longest probe chain
                 if(longestProbChain < probeChain){
                     longestProbChain = probeChain;
                 }
                 return arr;
             }
+            i++;
         }
     }
 
