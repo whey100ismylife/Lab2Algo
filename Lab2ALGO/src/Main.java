@@ -11,13 +11,20 @@ public class Main {
     public static double loadFactor = 1;
     public static int[] list =  new int[1000];
     public static int m = (int) (list.length/loadFactor);
-    //public static int m = 5;
-    public static int hashingUsed = 0;
-    public static int probesUsed = 0;
-    public static long runningTime = 0;
-    public static int nrOfColl = 0;
-    public static ArrayList<Triplet<Integer,Integer,Integer>> hashTable = new ArrayList<>();
-    public static int longestProbChain = 0;
+    //Modified variables
+    public static long runningTimeMod = 0;
+    public static int hashingUsedMod = 0;
+    public static int nrOfCollMod = 0;
+    public static int probesUsedMod = 0;
+    public static int longestProbChainMod = 0;
+    //Linear variables
+    public static long runningTimeLin = 0;
+    public static int hashingUsedLin = 0;
+    public static int nrOfCollLin = 0;
+    public static int probesUsedLin = 0;
+    public static int longestProbChainLin = 0;
+    public static ArrayList<Triplet<Integer,Integer,Integer>> hashTableMod = new ArrayList<>();
+    public static ArrayList<Integer> hashTableLin = new ArrayList<>();
 
 
     public static void main(String[] args) {
@@ -40,55 +47,84 @@ public class Main {
 
         //creates a empty hashtable.
         for (int i = 0; i < m; i++) {
-            hashTable.add(new Triplet<>(0, 0, null));
+            hashTableMod.add(new Triplet<>(0, 0, null));
+        }
+
+        //creates a empty hashtable.
+        for (int i = 0; i < m; i++) {
+            hashTableLin.add(null);
         }
 
         for (int i = 0; i < list.length; i++) {
             list[i] = rand.nextInt(1000);
         }
 
-        //Test list
-        //int[] list = {1,1,1,1,1};
 
         //
         long start = System.nanoTime();
         modifiedProbing(list);
         long end = System.nanoTime();
-        runningTime = end - start;
+        runningTimeMod = end - start;
 
-        System.out.println("Secs: " + runningTime*0.000000001);
-        System.out.println("amount of hashes: " + hashingUsed);
-        System.out.println("jumps:" + probesUsed);
-        System.out.println("longest jump:" + longestProbChain);
-        System.out.println("number of collision:" + nrOfColl);
+        System.out.println("Secs: " + runningTimeMod*0.000000001);
+        System.out.println("amount of hashes: " + hashingUsedMod);
+        System.out.println("jumps:" + probesUsedMod);
+        System.out.println("longest jump:" + longestProbChainMod);
+        System.out.println("number of collision:" + nrOfCollMod);
     }
 
-    public static void modifiedProbing(int test[]){
+    public static void modifiedProbing(int[] test){
         //variables
         int index;
-
 
         //loops through the given list with Integers.
         for (int x : test
         ) {
             //checks if the first index is occupied
             index = h(x, m);
-            if (hashTable.get(index).getValue() != null) {
-                nrOfColl++;
-                if (hashTable.get(index).getLup() <= hashTable.get(index).getLdown()) {
+            if (hashTableMod.get(index).getValue() != null) {
+                nrOfCollMod++;
+                if (hashTableMod.get(index).getLup() <= hashTableMod.get(index).getLdown()) {
                     //Calls f1 at the index + Lups index where we haven't checked yet.
-                    hashTable = f1(x, hashTable,index);
+                    hashTableMod = f1(x, hashTableMod,index);
                 } else {
-                      hashTable = f2(x,hashTable,index);
+                      hashTableMod = f2(x,hashTableMod,index);
                 }
             } else {
-                hashTable.get(index).setValue(x);
+                hashTableMod.get(index).setValue(x);
             }
         }
-        for(int i = 0; i < m; i++){
-            System.out.println("Index:" + i + " Lup:" + hashTable.get(i).getLup() + " Ldown:" + hashTable.get(i).getLdown() + " value:" + hashTable.get(i).getValue());
+        /*for(int i = 0; i < m; i++){
+            System.out.println("Index:" + i + " Lup:" + hashTableMod.get(i).getLup() + " Ldown:" + hashTableMod.get(i).getLdown() + " value:" + hashTableMod.get(i).getValue());
+        }*/
+    }
+
+    public static void linearProbing(int test[]) {
+        //variables
+        int index;
+        int i = 1;
+        int newIndex;
+        int probeChain;
+        for(int x : test) {
+            index = h(x,m);
+            if (hashTableLin.get(index) != null) {
+                probeChain++;
+                nrOfCollLin++;
+                newIndex = h(x+i,m);
+                if(hashTableLin.get(newIndex) == null){
+                    hashTableLin.add(x);
+                    if(longestProbChainLin < probeChain){
+                        longestProbChainLin = probeChain;
+                   }
+               }
+
+            } else {
+                hashTableLin.set(index, x);
+            }
         }
     }
+
+
 
 
     /**
