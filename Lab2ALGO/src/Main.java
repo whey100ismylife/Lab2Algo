@@ -9,7 +9,7 @@ import java.util.Random;
  */
 public class Main {
     public static double loadFactor = 1;
-    public static int[] list =  new int[10000];
+    public static int[] list =  new int[10];
     public static int m = (int) (list.length/loadFactor);
     //Modified variables
     public static long runningTimeMod = 0;
@@ -56,7 +56,7 @@ public class Main {
         }
 
         for (int i = 0; i < list.length; i++) {
-            list[i] = rand.nextInt(1000);
+            list[i] = rand.nextInt(10);
         }
 
 
@@ -85,6 +85,8 @@ public class Main {
         System.out.println("jumps:" + probesUsedLin);
         System.out.println("longest jump:" + longestProbChainLin);
         System.out.println("number of collision:" + nrOfCollLin);
+
+
     }
 
     public static void modifiedProbing(int[] test){
@@ -127,17 +129,16 @@ public class Main {
                 probeChain++;
                 nrOfCollLin++;
                 int i = 1;
-                boolean endL = true;
                 //Linear probing
-                while(endL){
+                while(true){
                     probesUsedLin++;
                     newIndex = hL(x+i,m);
                     if(hashTableLin.get(newIndex) == null){
-                        hashTableLin.add(x);
+                        hashTableLin.set(newIndex,x);
                         if(longestProbChainLin < probeChain){
                             longestProbChainLin = probeChain;
                        }
-                        endL = false;
+                        break;
                    }
                     i++;
                 }
@@ -146,6 +147,7 @@ public class Main {
                 hashTableLin.set(index, x);
             }
         }
+        
     }
 
 
