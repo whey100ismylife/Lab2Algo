@@ -8,40 +8,27 @@ import java.util.Random;
  * @author roblof-8, johlax-8, wesjon-5
  */
 public class Main {
-    public static double loadFactor = 1;
-    public static int[] list =  new int[10];
+    public static double loadFactor = 0.25;
+    public static int[] list =  new int[100000];
     public static int m = (int) (list.length/loadFactor);
     //Modified variables
     public static long runningTimeMod = 0;
-    public static int hashingUsedMod = 0;
-    public static int nrOfCollMod = 0;
-    public static int probesUsedMod = 0;
-    public static int longestProbChainMod = 0;
+    public static long hashingUsedMod = 0;
+    public static long nrOfCollMod = 0;
+    public static long probesUsedMod = 0;
+    public static long longestProbChainMod = 0;
     //Linear variables
     public static long runningTimeLin = 0;
-    public static int hashingUsedLin = 0;
-    public static int nrOfCollLin = 0;
-    public static int probesUsedLin = 0;
-    public static int longestProbChainLin = 0;
+    public static long hashingUsedLin = 0;
+    public static long nrOfCollLin = 0;
+    public static long probesUsedLin = 0;
+    public static long longestProbChainLin = 0;
     public static ArrayList<Triplet<Integer,Integer,Integer>> hashTableMod = new ArrayList<>();
     public static ArrayList<Integer> hashTableLin = new ArrayList<>();
+    public static String path = "C:/Users/Robin/OneDrive/SkrivBord/Ny mapp/Lab2Algo/RunMod.txt";
 
 
     public static void main(String[] args) {
-        /*
-        String path = "C:/Users/Robin/OneDrive/SkrivBord/LTU Kurser/Algoritmer och datastrukturer/Lab2/Values.txt";
-        try {
-            PrintWriter writer = new PrintWriter(path, "UTF-8");
-            writer.println("The first line");
-            writer.println("The second line");
-            writer.close();
-
-        }catch (FileNotFoundException e){
-            System.out.println("file not found");
-        }catch (UnsupportedEncodingException e){
-            System.out.println("shit");
-        }
-        */
         Random rand = new Random();
 
 
@@ -56,38 +43,37 @@ public class Main {
         }
 
         for (int i = 0; i < list.length; i++) {
-            list[i] = rand.nextInt(10);
+            list[i] = rand.nextInt(100);
         }
 
+            long startMod = System.nanoTime();
+            modifiedProbing(list);
+            long endMod = System.nanoTime();
+            runningTimeMod = endMod - startMod;
 
-        //
-        long startMod = System.nanoTime();
-        modifiedProbing(list);
-        long endMod = System.nanoTime();
-        long startLin = System.nanoTime();
-        linearProbing(list);
-        long endLin = System.nanoTime();
+            long startLin = System.nanoTime();
+            linearProbing(list);
+            long endLin = System.nanoTime();
 
-        runningTimeMod = endMod - startMod;
-        runningTimeLin = endLin - startLin;
+            runningTimeLin = endLin - startLin;
 
 
         System.out.println("Modified start!");
         System.out.println("Secs: " + runningTimeMod*0.000000001);
         System.out.println("amount of hashes: " + hashingUsedMod);
-        System.out.println("jumps:" + probesUsedMod);
-        System.out.println("longest jump:" + longestProbChainMod);
+        System.out.println("probes:" + probesUsedMod);
+        System.out.println("longest probe:" + longestProbChainMod);
         System.out.println("number of collision:" + nrOfCollMod);
         System.out.println("-------- modified end --------");
 
         System.out.println("Secs: " + runningTimeLin*0.000000001);
         System.out.println("amount of hashes: " + hashingUsedLin);
-        System.out.println("jumps:" + probesUsedLin);
-        System.out.println("longest jump:" + longestProbChainLin);
+        System.out.println("probes:" + probesUsedLin);
+        System.out.println("longest probes:" + longestProbChainLin);
         System.out.println("number of collision:" + nrOfCollLin);
 
-
     }
+
 
     public static void modifiedProbing(int[] test){
         //variables
