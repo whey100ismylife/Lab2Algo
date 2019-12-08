@@ -9,7 +9,7 @@ import java.util.Random;
  */
 public class Main {
     public static double loadFactor = 1;
-    public static int[] list =  new int[1000];
+    public static int[] list =  new int[10000];
     public static int m = (int) (list.length/loadFactor);
     //Modified variables
     public static long runningTimeMod = 0;
@@ -61,16 +61,30 @@ public class Main {
 
 
         //
-        long start = System.nanoTime();
+        long startMod = System.nanoTime();
         modifiedProbing(list);
-        long end = System.nanoTime();
-        runningTimeMod = end - start;
+        long endMod = System.nanoTime();
+        long startLin = System.nanoTime();
+        linearProbing(list);
+        long endLin = System.nanoTime();
 
+        runningTimeMod = endMod - startMod;
+        runningTimeLin = endLin - startLin;
+
+
+        System.out.println("Modified start!");
         System.out.println("Secs: " + runningTimeMod*0.000000001);
         System.out.println("amount of hashes: " + hashingUsedMod);
         System.out.println("jumps:" + probesUsedMod);
         System.out.println("longest jump:" + longestProbChainMod);
         System.out.println("number of collision:" + nrOfCollMod);
+        System.out.println("-------- modified end --------");
+
+        System.out.println("Secs: " + runningTimeLin*0.000000001);
+        System.out.println("amount of hashes: " + hashingUsedLin);
+        System.out.println("jumps:" + probesUsedLin);
+        System.out.println("longest jump:" + longestProbChainLin);
+        System.out.println("number of collision:" + nrOfCollLin);
     }
 
     public static void modifiedProbing(int[] test){
@@ -81,7 +95,7 @@ public class Main {
         for (int x : test
         ) {
             //checks if the first index is occupied
-            index = h(x, m);
+            index = hM(x, m);
             if (hashTableMod.get(index).getValue() != null) {
                 nrOfCollMod++;
                 if (hashTableMod.get(index).getLup() <= hashTableMod.get(index).getLdown()) {
@@ -102,21 +116,31 @@ public class Main {
     public static void linearProbing(int test[]) {
         //variables
         int index;
-        int i = 1;
         int newIndex;
-        int probeChain;
+        int probeChain = 0;
+
+        //loops through the lists elements
         for(int x : test) {
-            index = h(x,m);
+            index = hL(x,m);
+            //if the spot is taken, start linear probing
             if (hashTableLin.get(index) != null) {
                 probeChain++;
                 nrOfCollLin++;
-                newIndex = h(x+i,m);
-                if(hashTableLin.get(newIndex) == null){
-                    hashTableLin.add(x);
-                    if(longestProbChainLin < probeChain){
-                        longestProbChainLin = probeChain;
+                int i = 1;
+                boolean endL = true;
+                //Linear probing
+                while(endL){
+                    probesUsedLin++;
+                    newIndex = hL(x+i,m);
+                    if(hashTableLin.get(newIndex) == null){
+                        hashTableLin.add(x);
+                        if(longestProbChainLin < probeChain){
+                            longestProbChainLin = probeChain;
+                       }
+                        endL = false;
                    }
-               }
+                    i++;
+                }
 
             } else {
                 hashTableLin.set(index, x);
@@ -144,8 +168,8 @@ public class Main {
 
         //Starts probing
         while (true) {
-            newIndex = h(x+i, m);
-            probesUsed++;
+            newIndex = hM(x+i, m);
+            probesUsedMod++;
             probeChain++;
             //if we find an empty spot, add element and count chain.
             if(arr.get(newIndex).getValue() == null){
@@ -153,8 +177,8 @@ public class Main {
                 add = arr.get(index).getLup();
                 arr.get(index).setLup(add+1);
                 //Longest probe chain
-                if(longestProbChain < probeChain){
-                    longestProbChain = probeChain;
+                if(longestProbChainMod < probeChain){
+                    longestProbChainMod = probeChain;
                 }
                 return arr;
             }
@@ -171,11 +195,11 @@ public class Main {
 
         //Starts probing
         while (true) {
-            newIndex = h(x, m) - i;
+            newIndex = hM(x, m) - i;
             if(newIndex < 0 ){
                 newIndex = m + newIndex;
             }
-            probesUsed++;
+            probesUsedMod++;
             probeChain++;
             //if we find an empty spot, add element and count chain.
             if(arr.get(newIndex).getValue() == null){
@@ -183,8 +207,8 @@ public class Main {
                 add = arr.get(index).getLdown();
                 arr.get(index).setLDown(add+1);
                 //Longest probe chain
-                if(longestProbChain < probeChain){
-                    longestProbChain = probeChain;
+                if(longestProbChainMod < probeChain){
+                    longestProbChainMod = probeChain;
                 }
                 return arr;
             }
@@ -199,8 +223,13 @@ public class Main {
      * @param m Length of the list
      * @return index in the hashtable list.
      */
-    public static int h(int x, int m) {
-        hashingUsed++;
+    public static int hM(int x, int m) {
+        hashingUsedMod++;
+        return x % m;
+    }
+
+    public static int hL(int x, int m) {
+        hashingUsedLin++;
         return x % m;
     }
 
