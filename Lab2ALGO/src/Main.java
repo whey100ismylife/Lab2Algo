@@ -8,8 +8,8 @@ import java.util.Random;
  * @author roblof-8, johlax-8, wesjon-5
  */
 public class Main {
-    public static double loadFactor = 0.25;
-    public static int[] list =  new int[100000];
+    public static double loadFactor = 0.1;
+    public static int[] list =  new int[1000000];
     public static int m = (int) (list.length/loadFactor);
     //Modified variables
     public static long runningTimeMod = 0;
@@ -30,6 +30,7 @@ public class Main {
 
     public static void main(String[] args) {
         Random rand = new Random();
+        System.out.println(m);
 
 
         //creates a empty hashtable.
@@ -43,8 +44,9 @@ public class Main {
         }
 
         for (int i = 0; i < list.length; i++) {
-            list[i] = rand.nextInt(100);
+            list[i] = rand.nextInt();
         }
+
 
             long startMod = System.nanoTime();
             modifiedProbing(list);
@@ -72,8 +74,25 @@ public class Main {
         System.out.println("longest probes:" + longestProbChainLin);
         System.out.println("number of collision:" + nrOfCollLin);
 
+        avarageTime();
     }
 
+
+    public static void avarageTime(){
+
+        long startTime;
+        long endTime;
+        long totalTime = 0;
+
+        for(int i = 0; i <4; i++){
+            startTime = System.nanoTime();
+            modifiedProbing(list);
+            endTime = System.nanoTime();
+            totalTime += endTime-startTime;
+        }
+
+        System.out.println("avarageTime Mod : " + (totalTime/4) *0.000000001);
+    }
 
     public static void modifiedProbing(int[] test){
         //variables
@@ -84,15 +103,19 @@ public class Main {
         ) {
             //checks if the first index is occupied
             index = hM(x, m);
+            //if not start probing for an empty slot
             if (hashTableMod.get(index).getValue() != null) {
                 nrOfCollMod++;
+                //checks which of f1 or f2 is going to be used for probing
                 if (hashTableMod.get(index).getLup() <= hashTableMod.get(index).getLdown()) {
-                    //Calls f1 at the index + Lups index where we haven't checked yet.
+                    //Calls f1
                     hashTableMod = f1(x, hashTableMod,index);
                 } else {
+                    //calls f2
                       hashTableMod = f2(x,hashTableMod,index);
                 }
             } else {
+                //if the index in the hashtable is empty add the element.
                 hashTableMod.get(index).setValue(x);
             }
         }
@@ -133,11 +156,7 @@ public class Main {
                 hashTableLin.set(index, x);
             }
         }
-        
     }
-
-
-
 
     /**
      *
@@ -213,12 +232,12 @@ public class Main {
      */
     public static int hM(int x, int m) {
         hashingUsedMod++;
-        return x % m;
+        return  Math.floorMod(x, m);
     }
 
     public static int hL(int x, int m) {
         hashingUsedLin++;
-        return x % m;
+        return  Math.floorMod(x,m);
     }
 
 }
