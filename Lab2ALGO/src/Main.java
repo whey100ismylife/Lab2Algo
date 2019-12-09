@@ -8,8 +8,8 @@ import java.util.Random;
  * @author roblof-8, johlax-8, wesjon-5
  */
 public class Main {
-    public static double loadFactor = 0.1;
-    public static int[] list =  new int[1000000];
+    public static double loadFactor = 1;
+    public static int[] list =  new int[800000];
     public static int m = (int) (list.length/loadFactor);
     //Modified variables
     public static long runningTimeMod = 0;
@@ -25,12 +25,11 @@ public class Main {
     public static long longestProbChainLin = 0;
     public static ArrayList<Triplet<Integer,Integer,Integer>> hashTableMod = new ArrayList<>();
     public static ArrayList<Integer> hashTableLin = new ArrayList<>();
-    public static String path = "C:/Users/Robin/OneDrive/SkrivBord/Ny mapp/Lab2Algo/RunMod.txt";
 
 
     public static void main(String[] args) {
         Random rand = new Random();
-        System.out.println(m);
+       // System.out.println(m);
 
 
         //creates a empty hashtable.
@@ -47,19 +46,20 @@ public class Main {
             list[i] = rand.nextInt();
         }
 
-
+            /*
             long startMod = System.nanoTime();
             modifiedProbing(list);
             long endMod = System.nanoTime();
             runningTimeMod = endMod - startMod;
 
+            */
             long startLin = System.nanoTime();
             linearProbing(list);
             long endLin = System.nanoTime();
 
             runningTimeLin = endLin - startLin;
 
-
+        /*
         System.out.println("Modified start!");
         System.out.println("Secs: " + runningTimeMod*0.000000001);
         System.out.println("amount of hashes: " + hashingUsedMod);
@@ -67,32 +67,17 @@ public class Main {
         System.out.println("longest probe:" + longestProbChainMod);
         System.out.println("number of collision:" + nrOfCollMod);
         System.out.println("-------- modified end --------");
-
+*/
         System.out.println("Secs: " + runningTimeLin*0.000000001);
         System.out.println("amount of hashes: " + hashingUsedLin);
         System.out.println("probes:" + probesUsedLin);
         System.out.println("longest probes:" + longestProbChainLin);
         System.out.println("number of collision:" + nrOfCollLin);
 
-        avarageTime();
     }
 
 
-    public static void avarageTime(){
 
-        long startTime;
-        long endTime;
-        long totalTime = 0;
-
-        for(int i = 0; i <4; i++){
-            startTime = System.nanoTime();
-            modifiedProbing(list);
-            endTime = System.nanoTime();
-            totalTime += endTime-startTime;
-        }
-
-        System.out.println("avarageTime Mod : " + (totalTime/4) *0.000000001);
-    }
 
     public static void modifiedProbing(int[] test){
         //variables
@@ -128,18 +113,18 @@ public class Main {
         //variables
         int index;
         int newIndex;
-        int probeChain = 0;
 
         //loops through the lists elements
         for(int x : test) {
+            int probeChain = 0;
             index = hL(x,m);
-            //if the spot is taken, start linear probing
+            //if the spot is taken, start linear probing, new collision
             if (hashTableLin.get(index) != null) {
-                probeChain++;
                 nrOfCollLin++;
                 int i = 1;
                 //Linear probing
                 while(true){
+                    probeChain++;
                     probesUsedLin++;
                     newIndex = hL(x+i,m);
                     if(hashTableLin.get(newIndex) == null){
@@ -175,10 +160,12 @@ public class Main {
 
         //Starts probing
         while (true) {
+            //hashes the next index.
             newIndex = hM(x+i, m);
+            //increments probes used by 1.
             probesUsedMod++;
             probeChain++;
-            //if we find an empty spot, add element and count chain.
+            //if we find an empty spot, add element and count chain and add + 1
             if(arr.get(newIndex).getValue() == null){
                 arr.get(newIndex).setValue(x);
                 add = arr.get(index).getLup();
@@ -202,7 +189,7 @@ public class Main {
 
         //Starts probing
         while (true) {
-            newIndex = hM(x, m) - i;
+            newIndex = (hM(x, m)) - i;
             if(newIndex < 0 ){
                 newIndex = m + newIndex;
             }
