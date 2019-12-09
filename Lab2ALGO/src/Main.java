@@ -9,7 +9,7 @@ import java.util.Random;
  */
 public class Main {
     public static double loadFactor = 1;
-    public static int[] list =  new int[1000];
+    public static int[] list =  new int[10000];
     public static int m = (int) (list.length/loadFactor);
     //Modified variables
     public static long runningTimeMod = 0;
@@ -28,20 +28,9 @@ public class Main {
 
 
     public static void main(String[] args) {
-        /*
-        String path = "C:/Users/Robin/OneDrive/SkrivBord/LTU Kurser/Algoritmer och datastrukturer/Lab2/Values.txt";
-        try {
-            PrintWriter writer = new PrintWriter(path, "UTF-8");
-            writer.println("The first line");
-            writer.println("The second line");
-            writer.close();
 
-        }catch (FileNotFoundException e){
-            System.out.println("file not found");
-        }catch (UnsupportedEncodingException e){
-            System.out.println("shit");
-        }
-        */
+        String path = "C:/Users/Robin/OneDrive/SkrivBord/LTU Kurser/Algoritmer och datastrukturer/Lab2/Values.txt";
+
         Random rand = new Random();
 
 
@@ -56,11 +45,12 @@ public class Main {
         }
 
         for (int i = 0; i < list.length; i++) {
-            list[i] = rand.nextInt(1000);
+            list[i] = rand.nextInt(100);
         }
 
 
-        //
+
+
         long start = System.nanoTime();
         modifiedProbing(list);
         long end = System.nanoTime();
@@ -71,6 +61,29 @@ public class Main {
         System.out.println("jumps:" + probesUsedMod);
         System.out.println("longest jump:" + longestProbChainMod);
         System.out.println("number of collision:" + nrOfCollMod);
+
+        try {
+            PrintWriter writer = new PrintWriter(path, "UTF-8");
+            writer.println(m);
+            writer.println(runningTimeMod);
+            writer.println(hashingUsedMod);
+            writer.println(nrOfCollMod);
+            writer.println(probesUsedMod);
+            writer.println(longestProbChainMod);
+            writer.close();
+            writer.println(m);
+            writer.println(runningTimeLin);
+            writer.println(hashingUsedLin);
+            writer.println(nrOfCollLin);
+            writer.println(probesUsedLin);
+            writer.println(longestProbChainLin);
+            writer.close();
+
+        }catch (FileNotFoundException e){
+            System.out.println("file not found");
+        }catch (UnsupportedEncodingException e){
+            System.out.println("shit");
+        }
     }
 
     public static void modifiedProbing(int[] test){
