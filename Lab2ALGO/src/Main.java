@@ -9,29 +9,37 @@ import java.util.Random;
  */
 public class Main {
     public static double loadFactor = 1;
+<<<<<<< HEAD
     public static int[] list =  new int[10000];
+=======
+    public static int[] list =  new int[800000];
+>>>>>>> 6d0e72b7a4558073237c8acad2e2f54c22fbcce0
     public static int m = (int) (list.length/loadFactor);
     //Modified variables
     public static long runningTimeMod = 0;
-    public static int hashingUsedMod = 0;
-    public static int nrOfCollMod = 0;
-    public static int probesUsedMod = 0;
-    public static int longestProbChainMod = 0;
+    public static long hashingUsedMod = 0;
+    public static long nrOfCollMod = 0;
+    public static long probesUsedMod = 0;
+    public static long longestProbChainMod = 0;
     //Linear variables
     public static long runningTimeLin = 0;
-    public static int hashingUsedLin = 0;
-    public static int nrOfCollLin = 0;
-    public static int probesUsedLin = 0;
-    public static int longestProbChainLin = 0;
+    public static long hashingUsedLin = 0;
+    public static long nrOfCollLin = 0;
+    public static long probesUsedLin = 0;
+    public static long longestProbChainLin = 0;
     public static ArrayList<Triplet<Integer,Integer,Integer>> hashTableMod = new ArrayList<>();
     public static ArrayList<Integer> hashTableLin = new ArrayList<>();
 
 
     public static void main(String[] args) {
+<<<<<<< HEAD
 
         String path = "C:/Users/Robin/OneDrive/SkrivBord/LTU Kurser/Algoritmer och datastrukturer/Lab2/Values.txt";
 
+=======
+>>>>>>> 6d0e72b7a4558073237c8acad2e2f54c22fbcce0
         Random rand = new Random();
+       // System.out.println(m);
 
 
         //creates a empty hashtable.
@@ -45,22 +53,43 @@ public class Main {
         }
 
         for (int i = 0; i < list.length; i++) {
+<<<<<<< HEAD
             list[i] = rand.nextInt(100);
+=======
+            list[i] = rand.nextInt();
+>>>>>>> 6d0e72b7a4558073237c8acad2e2f54c22fbcce0
         }
 
+            /*
+            long startMod = System.nanoTime();
+            modifiedProbing(list);
+            long endMod = System.nanoTime();
+            runningTimeMod = endMod - startMod;
 
+            */
+            long startLin = System.nanoTime();
+            linearProbing(list);
+            long endLin = System.nanoTime();
+
+<<<<<<< HEAD
 
 
         long start = System.nanoTime();
         modifiedProbing(list);
         long end = System.nanoTime();
         runningTimeMod = end - start;
+=======
+            runningTimeLin = endLin - startLin;
+>>>>>>> 6d0e72b7a4558073237c8acad2e2f54c22fbcce0
 
+        /*
+        System.out.println("Modified start!");
         System.out.println("Secs: " + runningTimeMod*0.000000001);
         System.out.println("amount of hashes: " + hashingUsedMod);
-        System.out.println("jumps:" + probesUsedMod);
-        System.out.println("longest jump:" + longestProbChainMod);
+        System.out.println("probes:" + probesUsedMod);
+        System.out.println("longest probe:" + longestProbChainMod);
         System.out.println("number of collision:" + nrOfCollMod);
+<<<<<<< HEAD
 
         try {
             PrintWriter writer = new PrintWriter(path, "UTF-8");
@@ -84,7 +113,20 @@ public class Main {
         }catch (UnsupportedEncodingException e){
             System.out.println("shit");
         }
+=======
+        System.out.println("-------- modified end --------");
+*/
+        System.out.println("Secs: " + runningTimeLin*0.000000001);
+        System.out.println("amount of hashes: " + hashingUsedLin);
+        System.out.println("probes:" + probesUsedLin);
+        System.out.println("longest probes:" + longestProbChainLin);
+        System.out.println("number of collision:" + nrOfCollLin);
+
+>>>>>>> 6d0e72b7a4558073237c8acad2e2f54c22fbcce0
     }
+
+
+
 
     public static void modifiedProbing(int[] test){
         //variables
@@ -94,16 +136,20 @@ public class Main {
         for (int x : test
         ) {
             //checks if the first index is occupied
-            index = h(x, m);
+            index = hM(x, m);
+            //if not start probing for an empty slot
             if (hashTableMod.get(index).getValue() != null) {
                 nrOfCollMod++;
+                //checks which of f1 or f2 is going to be used for probing
                 if (hashTableMod.get(index).getLup() <= hashTableMod.get(index).getLdown()) {
-                    //Calls f1 at the index + Lups index where we haven't checked yet.
+                    //Calls f1
                     hashTableMod = f1(x, hashTableMod,index);
                 } else {
+                    //calls f2
                       hashTableMod = f2(x,hashTableMod,index);
                 }
             } else {
+                //if the index in the hashtable is empty add the element.
                 hashTableMod.get(index).setValue(x);
             }
         }
@@ -115,30 +161,36 @@ public class Main {
     public static void linearProbing(int test[]) {
         //variables
         int index;
-        int i = 1;
         int newIndex;
-        int probeChain;
+
+        //loops through the lists elements
         for(int x : test) {
-            index = h(x,m);
+            int probeChain = 0;
+            index = hL(x,m);
+            //if the spot is taken, start linear probing, new collision
             if (hashTableLin.get(index) != null) {
-                probeChain++;
                 nrOfCollLin++;
-                newIndex = h(x+i,m);
-                if(hashTableLin.get(newIndex) == null){
-                    hashTableLin.add(x);
-                    if(longestProbChainLin < probeChain){
-                        longestProbChainLin = probeChain;
+                int i = 1;
+                //Linear probing
+                while(true){
+                    probeChain++;
+                    probesUsedLin++;
+                    newIndex = hL(x+i,m);
+                    if(hashTableLin.get(newIndex) == null){
+                        hashTableLin.set(newIndex,x);
+                        if(longestProbChainLin < probeChain){
+                            longestProbChainLin = probeChain;
+                       }
+                        break;
                    }
-               }
+                    i++;
+                }
 
             } else {
                 hashTableLin.set(index, x);
             }
         }
     }
-
-
-
 
     /**
      *
@@ -157,17 +209,19 @@ public class Main {
 
         //Starts probing
         while (true) {
-            newIndex = h(x+i, m);
-            probesUsed++;
+            //hashes the next index.
+            newIndex = hM(x+i, m);
+            //increments probes used by 1.
+            probesUsedMod++;
             probeChain++;
-            //if we find an empty spot, add element and count chain.
+            //if we find an empty spot, add element and count chain and add + 1
             if(arr.get(newIndex).getValue() == null){
                 arr.get(newIndex).setValue(x);
                 add = arr.get(index).getLup();
                 arr.get(index).setLup(add+1);
                 //Longest probe chain
-                if(longestProbChain < probeChain){
-                    longestProbChain = probeChain;
+                if(longestProbChainMod < probeChain){
+                    longestProbChainMod = probeChain;
                 }
                 return arr;
             }
@@ -184,11 +238,11 @@ public class Main {
 
         //Starts probing
         while (true) {
-            newIndex = h(x, m) - i;
+            newIndex = (hM(x, m)) - i;
             if(newIndex < 0 ){
                 newIndex = m + newIndex;
             }
-            probesUsed++;
+            probesUsedMod++;
             probeChain++;
             //if we find an empty spot, add element and count chain.
             if(arr.get(newIndex).getValue() == null){
@@ -196,8 +250,8 @@ public class Main {
                 add = arr.get(index).getLdown();
                 arr.get(index).setLDown(add+1);
                 //Longest probe chain
-                if(longestProbChain < probeChain){
-                    longestProbChain = probeChain;
+                if(longestProbChainMod < probeChain){
+                    longestProbChainMod = probeChain;
                 }
                 return arr;
             }
@@ -212,9 +266,14 @@ public class Main {
      * @param m Length of the list
      * @return index in the hashtable list.
      */
-    public static int h(int x, int m) {
-        hashingUsed++;
-        return x % m;
+    public static int hM(int x, int m) {
+        hashingUsedMod++;
+        return  Math.floorMod(x, m);
+    }
+
+    public static int hL(int x, int m) {
+        hashingUsedLin++;
+        return  Math.floorMod(x,m);
     }
 
 }

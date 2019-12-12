@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
+<<<<<<< HEAD
     <bookmark url="file://$PROJECT_DIR$/src/Main.java" line="103" />
     <bookmark url="file://$PROJECT_DIR$/src/Main.java" line="188" mnemonic="8" />
+=======
+    <bookmark url="file://$PROJECT_DIR$/src/Main.java" line="89" />
+    <bookmark url="file://$PROJECT_DIR$/src/Main.java" line="190" mnemonic="8" />
+>>>>>>> 6d0e72b7a4558073237c8acad2e2f54c22fbcce0
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69f22ba3-730b-4863-8783-be17b55d90f6" name="Default Changelist" comment="">
@@ -19,19 +24,30 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FUSProjectUsageTrigger">
-    <session id="-1098372443">
+    <session id="-535271447">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
+<<<<<<< HEAD
           <entry key="project.closed" value="3" />
           <entry key="project.open.time.12" value="1" />
           <entry key="project.open.time.15" value="1" />
           <entry key="project.open.time.48" value="1" />
           <entry key="project.opened" value="3" />
+=======
+          <entry key="project.closed" value="1" />
+          <entry key="project.open.time.10" value="1" />
+          <entry key="project.open.time.18" value="1" />
+          <entry key="project.opened" value="2" />
+>>>>>>> 6d0e72b7a4558073237c8acad2e2f54c22fbcce0
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
+<<<<<<< HEAD
           <entry key="JAVA" value="901" />
+=======
+          <entry key="JAVA" value="1851" />
+>>>>>>> 6d0e72b7a4558073237c8acad2e2f54c22fbcce0
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
@@ -46,8 +62,13 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="1589">
               <caret line="160" column="12" selection-start-line="160" selection-start-column="12" selection-end-line="160" selection-end-column="12" />
+=======
+            <state relative-caret-position="119">
+              <caret line="154" selection-start-line="154" selection-end-line="154" />
+>>>>>>> 6d0e72b7a4558073237c8acad2e2f54c22fbcce0
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -56,7 +77,41 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+<<<<<<< HEAD
         <entry file="file://$PROJECT_DIR$/../../../../../Ny mapp/Lab2Algo/Lab2ALGO/src/Main.java">
+=======
+        <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/java/util/ArrayList.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="131">
+              <caret line="421" selection-start-line="421" selection-end-line="421" />
+              <folding>
+                <element signature="e#15631#15632#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/DivideConq.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="9" column="8" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Quad.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="12" selection-start-line="12" selection-end-line="12" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Triplet.java">
+>>>>>>> 6d0e72b7a4558073237c8acad2e2f54c22fbcce0
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-942">
               <caret line="96" column="37" selection-start-line="96" selection-start-column="16" selection-end-line="96" selection-end-column="37" />
@@ -102,10 +157,11 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-12" />
-    <option name="width" value="1938" />
-    <option name="height" value="1044" />
+  <component name="ProjectFrameBounds" extendedState="1">
+    <option name="x" value="-11" />
+    <option name="y" value="-11" />
+    <option name="width" value="983" />
+    <option name="height" value="1043" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -114,6 +170,10 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+<<<<<<< HEAD
+=======
+      <pane id="Scope" />
+>>>>>>> 6d0e72b7a4558073237c8acad2e2f54c22fbcce0
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -130,14 +190,17 @@
           <select />
         </subPane>
       </pane>
+<<<<<<< HEAD
       <pane id="Scope" />
+=======
+>>>>>>> 6d0e72b7a4558073237c8acad2e2f54c22fbcce0
       <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1575638880496" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1575915990455" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunDashboard">
@@ -185,19 +248,45 @@
       <workItem from="1575372181813" duration="2654000" />
       <workItem from="1575538267177" duration="11325000" />
       <workItem from="1575623448922" duration="10648000" />
+<<<<<<< HEAD
       <workItem from="1575650257895" duration="2847000" />
       <workItem from="1575820020298" duration="1160000" />
       <workItem from="1575821244557" duration="264000" />
+=======
+      <workItem from="1575650257895" duration="2644000" />
+      <workItem from="1575798123724" duration="1438000" />
+      <workItem from="1575813658770" duration="665000" />
+      <workItem from="1575821542239" duration="7607000" />
+      <workItem from="1575892891176" duration="17757000" />
+>>>>>>> 6d0e72b7a4558073237c8acad2e2f54c22fbcce0
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< HEAD
     <option name="totallyTimeSpent" value="54356000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26882592" />
+=======
+    <option name="totallyTimeSpent" value="80196000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-7" y="-7" width="655" height="695" extended-state="0" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.37815127" />
+>>>>>>> 6d0e72b7a4558073237c8acad2e2f54c22fbcce0
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -206,16 +295,20 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32827735" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.39679715" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39679715" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.3291815" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Terminal" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+<<<<<<< HEAD
       <window_info active="true" anchor="bottom" id="Messages" order="11" visible="true" weight="0.32740214" />
+=======
+      <window_info anchor="bottom" id="Messages" order="11" weight="0.32740214" />
+>>>>>>> 6d0e72b7a4558073237c8acad2e2f54c22fbcce0
       <window_info anchor="bottom" id="Docker" order="12" show_stripe_button="false" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.2489339" />
@@ -272,6 +365,7 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/Quad.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
@@ -286,6 +380,8 @@
         </state>
       </provider>
     </entry>
+=======
+>>>>>>> 6d0e72b7a4558073237c8acad2e2f54c22fbcce0
     <entry file="file://$PROJECT_DIR$/src/DivideConq.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -307,6 +403,26 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1589">
           <caret line="160" column="12" selection-start-line="160" selection-start-column="12" selection-end-line="160" selection-end-column="12" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/java/util/ArrayList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="131">
+          <caret line="421" selection-start-line="421" selection-end-line="421" />
+          <folding>
+            <element signature="e#15631#15632#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="154" selection-start-line="154" selection-end-line="154" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
